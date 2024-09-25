@@ -18,3 +18,5 @@ Route::get('/', function () {
     return redirect()->route('genrate-quotation');
 });
 Route::get('/genrate-quotation', [HomeController::class, 'genrateQuotation'])->name('genrate-quotation');
+Route::post('/store-quotation', [HomeController::class, 'storeQuotation'])->name('store-quotation');
+Route::get('/thank-you-page', [HomeController::class, 'generateQuotationPDF'])->name('thank-you');
