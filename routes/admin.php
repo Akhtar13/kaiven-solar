@@ -4,10 +4,13 @@ use App\Http\Controllers\Admin\AddressTypesController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\QualityPreferencesController;
 use App\Http\Controllers\Admin\PasswordController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\PanelBrandsController;
+use App\Http\Controllers\Admin\QuotationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,22 +43,22 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/change-password', [PasswordController::class, 'index'])->name('change-password');
     Route::post('update-password', [PasswordController::class, 'updatePassword'])->name('update-password');
 
-    Route::resource('products', ProductsController::class);
-    Route::get('/get-products', [ProductsController::class, 'getDatatable'])->name('get-products');
-
+    Route::resource('panel-brands', PanelBrandsController::class);
+    Route::resource('quality-preferences', QualityPreferencesController::class);
     Route::resource('setting', SettingController::class);
-    Route::get('/get-setting', [SettingController::class, 'getDatatable'])->name('get-setting');
-
     Route::resource('users', UsersController::class);
-    Route::get('/get-users', [UsersController::class, 'getDatatable'])->name('get-users');
-
+    Route::resource('products', ProductsController::class);
     Route::resource('address-types', AddressTypesController::class);
-Route::get('/get-address-types', [AddressTypesController::class, 'getDatatable'])->name('get-address_types');
-});
-use App\Http\Controllers\Admin\PanelBrandsController;
-Route::resource('panel-brands', PanelBrandsController::class);
-Route::get('/get-panel-brands', [PanelBrandsController::class, 'getDatatable'])->name('get-panel_brands');
+    Route::resource('quotation', QuotationController::class);
 
-use App\Http\Controllers\Admin\QualityPreferencesController;
-Route::resource('quality-preferences', QualityPreferencesController::class);
-Route::get('/get-quality-preferences', [QualityPreferencesController::class, 'getDatatable'])->name('get-quality_preferences');
+    Route::get('/get-products', [ProductsController::class, 'getDatatable'])->name('get-products');
+    Route::get('/get-quotation', [QuotationController::class, 'getDatatable'])->name('get-quotation');
+    Route::get('/get-setting', [SettingController::class, 'getDatatable'])->name('get-setting');
+    Route::get('/get-users', [UsersController::class, 'getDatatable'])->name('get-users');
+    Route::get('/get-panel-brands', [PanelBrandsController::class, 'getDatatable'])->name('get-panel_brands');
+    Route::get('/get-quality-preferences', [QualityPreferencesController::class, 'getDatatable'])->name('get-quality_preferences');
+    Route::get('/get-address-types', [AddressTypesController::class, 'getDatatable'])->name('get-address_types');
+
+    Route::get('/quotation-invoice/{id}', [QuotationController::class, 'downloadPdf'])->name('get-address_types');
+    Route::get('/customer', [QuotationController::class, 'customer'])->name('customer');
+});

@@ -71,6 +71,13 @@
                             data-key="t-dashboards">{{ trans('messages.quality_preferences') }}</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ request()->segment(2) === 'quotation' ? 'active' : '' }}"
+                        href="{{ route('admin.quotation.index') }}" role="button">
+                        <i class="ri-file-text-line"></i> <span
+                            data-key="t-dashboards">{{ trans('messages.quotation') }}</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

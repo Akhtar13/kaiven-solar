@@ -170,6 +170,17 @@ class AdminDataTableButtonHelper
              </button>';
     }
 
+    public static function pdfButtton($array): string
+    {
+        return '<button data-id="'.$array['id'].'"
+             class="ms-2 download-invoice btn btn-sm btn-warning"
+             data-toggle="tooltip"
+             data-placement="top"
+             title="Download PDF">
+             <i class="ri-file-pdf-2-line align-bottom"></i>
+             </button>';
+    }
+
     public static function deleteButton($array): string
     {
         return '<button data-id="'.$array['id'].'"

@@ -34,11 +34,23 @@
                                                     <label for="name">Name</label>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-4">
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control" id="mobile_no"
                                                         name="mobile_no" placeholder="Enter your Mobile No">
                                                     <label for="mobile_no">Mobile No</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 aligh-items-center">
+                                                <button type="button" class="btn btn-success" id="send_otp">
+                                                    Send OTP
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-12 otp_div d-none">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control integer" id="otp"
+                                                        name="otp" placeholder="Enter your OTP">
+                                                    <label for="floatingSelect">OTP</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -57,13 +69,14 @@
                                             <div class="col-lg-12">
                                                 <div class="form-floating">
                                                     <input type="text" class="form-control" id="cityfloatingInput"
-                                                        placeholder="Enter your city">
+                                                        name="city" placeholder="Enter your city">
                                                     <label for="cityfloatingInput">City</label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="form-floating">
-                                                    <input type="text" class="form-control float" id="billing_year" name="billing_year"
+                                                    <input type="text" class="form-control float" id="billing_year"
+                                                        name="billing_year"
                                                         placeholder="Enter your Higest Billing Year">
                                                     <label for="billing_year">Enter Your Higest Billing Per Year</label>
                                                 </div>
@@ -122,8 +135,7 @@
                                                                             class="minus material-shadow">–</button>
                                                                         <input type="number" class="product-quantity"
                                                                             value="1" min="0"
-                                                                            max="100"
-                                                                            name="quantity[] "
+                                                                            max="100" name="quantity[] "
                                                                             data-panel-id="{{ $panelBrand->id }}"
                                                                             data-unit-price="{{ $panelBrand->price }}"
                                                                             disabled>
@@ -253,6 +265,30 @@
         });
     </script>
     <script src="{{ asset('assets/custom-js/custom/form.js') }}?v={{ time() }}"></script>
+    <script>
+        document.getElementById('send_otp').addEventListener('click', function() {
+            const mobile_no = document.getElementById('mobile_no').value;
+            if (!mobile_no || mobile_no.length !== 10) {
+                notificationToast('Please enter a valid 10-digit mobile number.','warning');
+                return;
+            }
+            loaderView()
+            axios.post(APP_URL + '/send-otp', { 
+                    mobile_no: mobile_no
+                })
+                .then(function(response) {
+                    loaderHide()
+                    document.querySelector('.otp_div').classList.remove('d-none');
+                    notificationToast('OTP has been sent successfully!','success');
+                })
+                .catch(function(error) {
+                    loaderHide()
+                    console.error('Error sending OTP:', error);
+                    notificationToast('Failed to send OTP. Please try again.','warning');
+                });
+
+        });
+    </script>
 </body>
 
 </html>

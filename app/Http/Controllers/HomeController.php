@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AddressType;
+use App\Helpers\Helper;
 use App\Models\PanelBrand;
 use App\Models\QualityPreference;
 use App\Models\Quotation;
 use App\Models\QuotationItem;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -33,6 +35,8 @@ class HomeController extends Controller
         $rules = [
             'name' => 'required|string|max:255',
             'mobile_no' => 'required|digits:10',
+            'city' => 'required',
+            'otp' => 'required',
             'address_type' => 'required|integer',
             'billing_year' => 'required|integer|min:1000|max:9999',
             'panel_brands' => 'required|array|min:1',
@@ -46,11 +50,19 @@ class HomeController extends Controller
         $messages = [
             'quality_preference.size' => 'The quality preferences must match the number of panel brands selected.',
             'quantity.size' => 'The quantity values must match the number of panel brands selected.',
+            'otp.requried' => 'Please Verify Mobile NO',
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()->first()], 422);
+        }
+
+        if(!Session::get('otp')){
+            return response()->json(['message' => 'Please Verify Mobile NO'], 422);
+        }
+        if((int)Session::get('otp') !== (int)$request->otp){
+            return response()->json(['message' => 'Invalid OTP'], 422);
         }
 
         $quotation = Quotation::create([
@@ -96,5 +108,11 @@ class HomeController extends Controller
         $mpdf->WriteHTML($html);
         $fileName = 'quotation_invoice_' . $quotation->id . '.pdf';
         return $mpdf->Output($fileName, 'I');
+    }
+    
+    public function sendOtp(Request $request) :JsonResponse {
+        $otp = Helper::sendSMS($request->mobile_no);
+        Session::put('otp',$otp);
+        return response()->json(['message','OTP SEND SUCCESSFULLY']);
     }
 }
