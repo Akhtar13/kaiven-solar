@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return array (
   'app_name' => 'Kaiven Solar',
   'add_new' => 'Add New',
   'id' => 'ID',
@@ -196,4 +196,16 @@ return array(
   'quantity' => 'Quantity',
   'total_price' => 'Total Price',
   'quotation' => 'Quotation',
+  'kwt_added_successfully' => 'Kwt added successfully.',
+  'kwt_updated_successfully' => 'Kwt updated successfully.',
+  'kwt_deleted_successfully' => 'Kwt deleted successfully.',
+  'from_kwt' => 'From Kwt',
+  'to_kwt' => 'To Kwt',
+  'kwt' => 'Kwt',
+  'kwt_add' => 'Add Kwt',
+  'kwt_edit' => 'Edit Kwt',
+  'kwt_list' => 'Kwt List',
+  'kwts' => 'Kwts',
+  'kwt_delete_title' => 'Kwt Delete?',
+  'kwt_delete_text' => 'Are You Sure Delete This Kwt?',
 );

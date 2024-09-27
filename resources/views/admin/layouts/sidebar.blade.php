@@ -78,6 +78,13 @@
                             data-key="t-dashboards">{{ trans('messages.quotation') }}</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link {{ (request()->segment(2) === 'kwt') ? 'active' : '' }}"
+                       href="{{ route('admin.kwt.index') }}" role="button">
+                        <i class="ri-flashlight-line"></i> <span
+                            data-key="t-dashboards">{{trans('messages.kwt')}}</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

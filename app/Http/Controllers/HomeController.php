@@ -37,13 +37,29 @@ class HomeController extends Controller
             'mobile_no' => 'required|digits:10',
             'city' => 'required',
             'otp' => 'required',
-            'address_type' => 'required|integer',
-            'billing_year' => 'required|integer|min:1000|max:9999',
+            'address_type' => 'required',
+            'billing_year' => 'required',
             'panel_brands' => 'required|array|min:1',
             'panel_brands.*' => 'integer|distinct',
-            'quality_preference' => 'required|array|size:' . count($request->panel_brands),
+            'quality_preference' => [
+                'required',
+                'array',
+                function($attribute, $value, $fail) use ($request) {
+                    if (count($value) !== count($request->panel_brands ?? [])) {
+                        $fail('The quality preferences must match the number of panel brands selected.');
+                    }
+                }
+            ],
             'quality_preference.*' => 'integer',
-            'quantity' => 'required|array|size:' . count($request->panel_brands),
+            'quantity' => [
+                'required',
+                'array',
+                function($attribute, $value, $fail) use ($request) {
+                    if (count($value) !== count($request->panel_brands ?? [])) {
+                        $fail('The quantity values must match the number of panel brands selected.');
+                    }
+                }
+            ],
             'quantity.*' => 'integer|min:1',
         ];
 

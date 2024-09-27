@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PanelBrandsController;
 use App\Http\Controllers\Admin\QuotationController;
+use App\Http\Controllers\Admin\KwtController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::resource('products', ProductsController::class);
     Route::resource('address-types', AddressTypesController::class);
     Route::resource('quotation', QuotationController::class);
+    Route::resource('kwt', KwtController::class);
 
     Route::get('/get-products', [ProductsController::class, 'getDatatable'])->name('get-products');
     Route::get('/get-quotation', [QuotationController::class, 'getDatatable'])->name('get-quotation');
@@ -58,6 +60,7 @@ Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/get-panel-brands', [PanelBrandsController::class, 'getDatatable'])->name('get-panel_brands');
     Route::get('/get-quality-preferences', [QualityPreferencesController::class, 'getDatatable'])->name('get-quality_preferences');
     Route::get('/get-address-types', [AddressTypesController::class, 'getDatatable'])->name('get-address_types');
+    Route::get('/get-kwt', [KwtController::class, 'getDatatable'])->name('get-kwt');
 
     Route::get('/quotation-invoice/{id}', [QuotationController::class, 'downloadPdf'])->name('get-address_types');
     Route::get('/customer', [QuotationController::class, 'customer'])->name('customer');
