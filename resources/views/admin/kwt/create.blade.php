@@ -23,15 +23,25 @@
                             <div class="row">
                                 
                                 <div class="col-lg-12 mb-3">
-                                    <label for="from_kwt" class="form-label required">{{trans('messages.from_kwt')}}</label>
-                                    <input type="text" class="form-control" id="from_kwt" name="from_kwt"
+                                    <label for="from_kwt" class="form-label  required">{{trans('messages.from_kwt')}}</label>
+                                    <input type="text" class="float form-control" id="from_kwt" name="from_kwt"
                                         placeholder="{{trans('messages.from_kwt')}}" autofocus>
                                 </div>
 
                                 <div class="col-lg-12 mb-3">
-                                    <label for="to_kwt" class="form-label required">{{trans('messages.to_kwt')}}</label>
-                                    <input type="text" class="form-control" id="to_kwt" name="to_kwt"
+                                    <label for="to_kwt" class="form-label  required">{{trans('messages.to_kwt')}}</label>
+                                    <input type="text" class=" float form-control" id="to_kwt" name="to_kwt"
                                         placeholder="{{trans('messages.to_kwt')}}" autofocus>
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    <label for="suggestion_one" class="form-label  required">{{trans('messages.suggestion_one')}}</label>
+                                    <input type="text" class="form-control float " id="suggestion_one" name="suggestion_one"
+                                        placeholder="{{trans('messages.suggestion_one')}}" autofocus>
+                                </div>
+                                <div class="col-lg-12 mb-3">
+                                    <label for="suggestion_two" class="form-label  required">{{trans('messages.suggestion_two')}}</label>
+                                    <input type="text" class="form-control float " id="suggestion_two" name="suggestion_two"
+                                        placeholder="{{trans('messages.suggestion_two')}}" autofocus>
                                 </div>
 
                                 <div class="col-lg-12 mb-3">

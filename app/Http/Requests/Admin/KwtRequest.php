@@ -13,10 +13,12 @@ class KwtRequest extends FormRequest
 
     public function rules()
     {
-        return array (
-  'from_kwt' => 'required',
-  'to_kwt' => 'required',
-  'description' => 'required',
-);
+        return array(
+            'from_kwt' => 'required',
+            'to_kwt' => 'required',
+            'suggestion_one' => 'required',
+            'suggestion_two' => 'required',
+            'description' => 'required',
+        );
     }
 }

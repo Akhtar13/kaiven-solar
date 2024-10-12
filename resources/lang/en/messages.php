@@ -208,4 +208,6 @@ return array (
   'kwts' => 'Kwts',
   'kwt_delete_title' => 'Kwt Delete?',
   'kwt_delete_text' => 'Are You Sure Delete This Kwt?',
+  'suggestion_one' => 'Suggestion One',
+  'suggestion_two' => 'Suggestion Two',
 );

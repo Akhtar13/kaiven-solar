@@ -26,7 +26,6 @@
                                 <form method="POST" data-parsley-validate="" id="addEditForm" role="form">
                                     @csrf
                                     <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
-
                                         <ul class="nav nav-pills nav-justified custom-nav" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3 active" id="quotation-info-tab"

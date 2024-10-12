@@ -45,7 +45,8 @@ class KwtController extends Controller
 
     public function store(KwtRequest $request): JsonResponse
     {
-        $details = $request->only(['from_kwt', 'to_kwt', 'description']);
+        $details = $request->only(['from_kwt', 'to_kwt', 'description','suggestion_one','suggestion_two']);
+        
         if ((int)$request['edit_value'] === 0) {
             $model = new Kwt();
             foreach ($details as $key => $value) {
