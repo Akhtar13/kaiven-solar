@@ -16,11 +16,21 @@ class Quotation extends Model
         'city',
         'higest_billing',
         'total',
+        'panel_brand_id',
+        'quality_preference_id',
     ];
 
     public function addressType()
     {
         return $this->belongsTo(AddressType::class);
+    }
+    public function pabelBrand()
+    {
+        return $this->belongsTo(PanelBrand::class,'panel_brand_id');
+    }
+    public function qualityPreference()
+    {
+        return $this->belongsTo(QualityPreference::class,'quality_preference_id');
     }
 
     public function items()

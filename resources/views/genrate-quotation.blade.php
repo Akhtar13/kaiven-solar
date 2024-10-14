@@ -44,7 +44,7 @@
                                                     data-position="1" tabindex="-1">
                                                     <i
                                                         class="ri-truck-line fs-16 p-2 bg-primary-subtle text-primary rounded-circle align-middle me-2"></i>
-                                                    Shipping Info
+                                                    Quotation Info
                                                 </button>
                                             </li>
                                         </ul>
@@ -59,7 +59,9 @@
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-lg-12">
-                                                    <div class="form-floating">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="gen-info-email-input">Address
+                                                            Type</label>
                                                         <select class="form-select" id="address_type"
                                                             name="address_type"
                                                             aria-label="Floating label select example">
@@ -69,30 +71,76 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
-                                                        <label for="floatingSelect">Address Type</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="form-floating">
-                                                        <input type="text" class="form-control"
-                                                            id="cityfloatingInput" name="city"
-                                                            placeholder="Enter your city">
-                                                        <label for="cityfloatingInput">City</label>
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="city">City</label>
+                                                        <select class="form-select" id="city" name="city">
+                                                            <option value="">Choose...</option>
+                                                            <option value="Bharuch">Bharuch</option>
+                                                            <option value="Surat">Surat</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <div class="form-floating">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="billing_year">Enter Your Highest
+                                                            Billing Per Year</label>
                                                         <input type="text" class="form-control float"
                                                             id="billing_year" name="billing_year"
-                                                            placeholder="Enter your Higest Billing Year">
-                                                        <label for="billing_year">Enter Your Higest Billing Per
-                                                            Year</label>
+                                                            placeholder="Enter your Highest Billing Year"
+                                                            onchange="calculateExpectedAmount()">
                                                     </div>
                                                 </div>
+
+                                                @foreach ($kwts as $index => $kwt)
+                                                    <div class="col-lg-12 mb-3 d-none result"
+                                                        data-index="{{ $index }}" data-min="{{ $kwt->from_kwt }}"
+                                                        data-max="{{ $kwt->to_kwt }}">
+                                                        <label for="expected_amount" class="form-label required">
+                                                            Your Minimum Requirement is {{ $kwt->suggestion_one }} or
+                                                            {{ $kwt->suggestion_two }} kW.
+                                                            Your Price will be between:
+                                                        </label>
+                                                        <div class="form-outline row g-2">
+                                                            <div class="col-lg-6 col-sm-6 mb-3">
+                                                                <div class="form-check card-radio">
+                                                                    <input id="expected_amount_{{ $kwt->id }}_1"
+                                                                        name="expected_amount" type="radio"
+                                                                        value="{{ 48500 * $kwt->suggestion_one }}" class="form-check-input">
+                                                                    <label class="form-check-label"
+                                                                        for="expected_amount_{{ $kwt->id }}_1">
+                                                                        <span class="fw-normal text-wrap mb-1 d-block">
+                                                                            48500 * {{ $kwt->suggestion_one }} =
+                                                                            {{ 48500 * $kwt->suggestion_one }}
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-6 col-sm-6 mb-3">
+                                                                <div class="form-check card-radio">
+                                                                    <input id="expected_amount_{{ $kwt->id }}_2"
+                                                                        name="expected_amount" type="radio"
+                                                                        value="{{ 49500 * $kwt->suggestion_two }}" class="form-check-input">
+                                                                    <label class="form-check-label"
+                                                                        for="expected_amount_{{ $kwt->id }}_2">
+                                                                        <span class="fw-normal text-wrap mb-1 d-block">
+                                                                            49500 * {{ $kwt->suggestion_two }} =
+                                                                            {{ 49500 * $kwt->suggestion_two }}
+                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                             <div>
                                                 <div class="d-flex align-items-start gap-3 mt-3">
-                                                    <button type="button" class="btn btn-primary right ms-auto nexttab"
+                                                    <button type="button"
+                                                        class="btn btn-success right ms-auto nexttab"
                                                         data-nexttab="personal-info-tab">
                                                         Generate My instant Quotation
                                                     </button>
@@ -108,20 +156,20 @@
                                             </div>
                                             <div class="row g-3">
                                                 <div class="col-lg-6">
-                                                    <div class="form-floating">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="name">Name</label>
                                                         <input type="text" class="form-control" id="name"
                                                             name="name" placeholder="Enter your name">
-                                                        <label for="name">Name</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4">
-                                                    <div class="form-floating">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="mobile_no">Mobile No</label>
                                                         <input type="text" class="form-control" id="mobile_no"
                                                             name="mobile_no" placeholder="Enter your Mobile No">
-                                                        <label for="mobile_no">Mobile No</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 aligh-items-center">
+                                                <div class="col-lg-2 mt-5 aligh-items-center">
                                                     <button type="button" class="btn btn-success" id="send_otp">
                                                         Send OTP
                                                     </button>
@@ -136,88 +184,44 @@
                                                 </div>
 
                                                 <div class="col-lg-12">
-                                                    <hr>
-                                                    @foreach ($panelBrands as $panelBrand)
-                                                        <div class="card product">
-                                                            <div class="card-body">
-                                                                <div class="row gy-3">
-                                                                    <div class="col-sm">
-                                                                        <h5 class="fs-14 text-truncate">
-                                                                            <div class="form-check mb-3">
-                                                                                <input
-                                                                                    class="form-check-input panel-checkbox"
-                                                                                    type="checkbox"
-                                                                                    name="panel_brands[]"
-                                                                                    id="panel_brand_{{ $panelBrand->id }}"
-                                                                                    value="{{ $panelBrand->id }}"
-                                                                                    data-panel-id="{{ $panelBrand->id }}">
-                                                                                <label class="form-check-label"
-                                                                                    for="panel_brand_{{ $panelBrand->id }}">
-                                                                                    {{ $panelBrand->name }}
-                                                                                </label>
-                                                                            </div>
-                                                                        </h5>
-                                                                        <ul class="list-inline text-muted">
-                                                                            <li class="list-inline-item">Price: <span
-                                                                                    class="fw-medium">${{ $panelBrand->price }}</span>
+                                                    <label for="panel_brand_select">Select Panel Brand</label>
+                                                    <select id="panel_brand_select" class="form-select"
+                                                        name="panel_brand_id" onchange="showQualityOptions(this)">
+                                                        <option value="">-- Select Panel Brand --</option>
+                                                        @foreach ($panelBrands as $panelBrand)
+                                                            <option value="{{ $panelBrand->id }}">
+                                                                {{ $panelBrand->name }}</option>
+                                                        @endforeach
+                                                    </select>
+
+                                                    <div id="quality_options" class="mt-4">
+                                                        @foreach ($panelBrands as $panelBrand)
+                                                            <div class="quality-group d-none"
+                                                                data-panel-id="{{ $panelBrand->id }}">
+                                                                <h6>Quality Preferences for {{ $panelBrand->name }}
+                                                                </h6>
+                                                                <ul class="list-inline">
+                                                                    @foreach ($qualityPreferences as $qualityPreference)
+                                                                        @if ($qualityPreference->panel_brand_id === $panelBrand->id)
+                                                                            <li class="list-inline-item">
+                                                                                <div
+                                                                                    class="form-check form-check-inline">
+                                                                                    <input class="form-check-input"
+                                                                                        type="radio"
+                                                                                        name="quality_preference_id"
+                                                                                        value="{{ $qualityPreference->id }}"
+                                                                                        id="quality_preference_{{ $qualityPreference->id }}">
+                                                                                    <label class="form-check-label"
+                                                                                        for="quality_preference_{{ $qualityPreference->id }}">
+                                                                                        {{ $qualityPreference->name }}
+                                                                                    </label>
+                                                                                </div>
                                                                             </li>
-                                                                        </ul>
-                                                                        <ul class="list-inline text-muted">
-                                                                            <div class="mt-4 mt-lg-0">
-                                                                                @foreach ($qualityPreferences as $qualityPreference)
-                                                                                    @if ($qualityPreference->panel_brand_id === $panelBrand->id)
-                                                                                        <li class="list-inline-item">
-                                                                                            <div
-                                                                                                class="form-check form-check-inline">
-                                                                                                <input
-                                                                                                    class="form-check-input"
-                                                                                                    type="radio"
-                                                                                                    value="{{ $qualityPreference->id }}"
-                                                                                                    name="quality_preference[{{ $panelBrand->id }}]"
-                                                                                                    id="quality_preference_{{ $qualityPreference->id }}"
-                                                                                                    disabled>
-                                                                                                <label
-                                                                                                    class="form-check-label"
-                                                                                                    for="quality_preference_{{ $qualityPreference->id }}">{{ $qualityPreference->name }}</label>
-                                                                                            </div>
-                                                                                        </li>
-                                                                                    @endif
-                                                                                @endforeach
-                                                                            </div>
-                                                                        </ul>
-                                                                        <div class="input-step">
-                                                                            <button type="button"
-                                                                                class="minus material-shadow">–</button>
-                                                                            <input type="number"
-                                                                                class="product-quantity"
-                                                                                value="1" min="0"
-                                                                                max="100" name="quantity[] "
-                                                                                data-panel-id="{{ $panelBrand->id }}"
-                                                                                data-unit-price="{{ $panelBrand->price }}"
-                                                                                disabled>
-                                                                            <button type="button"
-                                                                                class="plus material-shadow">+</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-sm-auto">
-                                                                        <div class="text-lg-end">
-                                                                            <h5 class="fs-14">$<span
-                                                                                    id="ticket_price_{{ $panelBrand->id }}"
-                                                                                    class="product-price"
-                                                                                    data-panel-id="{{ $panelBrand->id }}">0.00</span>
-                                                                            </h5>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </ul>
                                                             </div>
-                                                        </div>
-                                                        <hr>
-                                                    @endforeach
-                                                    <div class="col-sm-auto">
-                                                        <div class="text-lg-end">
-                                                            <h5 class="fs-14">$<span id="total_price">0.00</span>
-                                                            </h5>
-                                                        </div>
+                                                        @endforeach
                                                     </div>
                                                 </div>
                                                 <div class="d-flex align-items-start gap-3 mt-4">
@@ -225,8 +229,7 @@
                                                         data-previous="quotation-info-tab"><i
                                                             class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back
                                                         to Quotation Info</button>
-                                                    <button type="submit"
-                                                        class="btn btn-primary right ms-auto"
+                                                    <button type="submit" class="btn btn-success right ms-auto"
                                                         data-nexttab="pills-payment-tab">Generate</button>
                                                 </div>
                                             </div>
@@ -251,78 +254,149 @@
         let redirect_url = '/thank-you-page';
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updatePrice(quantityInput, priceDisplay, unitPrice) {
-                var quantity = parseInt(quantityInput.value);
-                var totalPrice = (quantity * unitPrice).toFixed(2);
-                priceDisplay.textContent = totalPrice;
-                updateTotalPrice();
-            }
+        function calculateExpectedAmount() {
+            const billingYear = parseFloat(document.getElementById('billing_year').value);
+            if (isNaN(billingYear)) return; // Stop if input is invalid
 
-            function updateTotalPrice() {
-                var total = 0;
-                document.querySelectorAll('.product-price').forEach(function(priceElement) {
-                    total += parseFloat(priceElement.textContent);
-                });
-                document.getElementById('total_price').textContent = total.toFixed(2);
-            }
+            const X = billingYear / 800;
+            console.log('Calculated X:', X);
 
-            document.querySelectorAll('.panel-checkbox').forEach(function(checkbox) {
-                checkbox.addEventListener('change', function() {
-                    var panelId = this.getAttribute('data-panel-id');
-                    var radioButtons = document.querySelectorAll('input[name="quality_preference[' +
-                        panelId + ']"]');
-                    var quantityInput = document.querySelector(
-                        'input.product-quantity[data-panel-id="' + panelId + '"]');
-                    var priceDisplay = document.querySelector('.product-price[data-panel-id="' +
-                        panelId + '"]');
-                    var unitPrice = parseFloat(quantityInput.getAttribute('data-unit-price'));
+            // Get all result divs
+            const resultDivs = document.querySelectorAll('.result');
 
-                    radioButtons.forEach(function(radio) {
-                        radio.disabled = !checkbox.checked;
-                    });
-
-                    quantityInput.disabled = !checkbox.checked;
-
-                    if (!checkbox.checked) {
-                        quantityInput.value = 1;
-                        priceDisplay.textContent = '0.00';
-                    } else {
-                        updatePrice(quantityInput, priceDisplay, unitPrice);
-                    }
-
-                    updateTotalPrice();
+            // Hide all result divs initially
+            resultDivs.forEach(div => {
+                div.classList.add('d-none'); // Hide all divs
+                div.querySelectorAll('input[type="radio"]').forEach(checkbox => {
+                    checkbox.checked = false; // Uncheck all checkboxes
                 });
             });
 
-            document.querySelectorAll('.input-step').forEach(function(stepper) {
-                var input = stepper.querySelector('.product-quantity');
-                var panelId = input.getAttribute('data-panel-id');
-                var priceDisplay = document.querySelector('.product-price[data-panel-id="' + panelId +
-                    '"]');
-                var unitPrice = parseFloat(input.getAttribute('data-unit-price'));
+            let lowestDiv = null;
+            let highestDiv = null;
+            let matchingDiv = null;
 
-                stepper.querySelector('.plus').addEventListener('click', function() {
-                    if (!input.disabled && Number(input.value) < Number(input.max)) {
-                        input.value = parseInt(input.value) + 1;
-                        updatePrice(input, priceDisplay, unitPrice);
-                    }
-                });
+            resultDivs.forEach(div => {
+                const min = parseFloat(div.getAttribute('data-min'));
+                const max = parseFloat(div.getAttribute('data-max'));
 
-                stepper.querySelector('.minus').addEventListener('click', function() {
-                    if (!input.disabled && Number(input.value) > Number(input.min)) {
-                        input.value = parseInt(input.value) - 1;
-                        updatePrice(input, priceDisplay, unitPrice);
-                    }
-                });
+                if (!lowestDiv || min < parseFloat(lowestDiv.getAttribute('data-min'))) {
+                    lowestDiv = div;
+                }
+                if (!highestDiv || max > parseFloat(highestDiv.getAttribute('data-max'))) {
+                    highestDiv = div;
+                }
 
-                input.addEventListener('change', function() {
-                    if (!input.disabled) {
-                        updatePrice(input, priceDisplay, unitPrice);
-                    }
+                if (X >= min && X < max) {
+                    matchingDiv = div;
+                }
+            });
+
+            // Logic to show the correct div
+            if (matchingDiv) {
+                matchingDiv.classList.remove('d-none'); // Show the matching div if found
+            } else if (X < parseFloat(lowestDiv.getAttribute('data-min'))) {
+                lowestDiv.classList.remove('d-none'); // Show the lowest div if X is smaller than all ranges
+            } else if (X >= parseFloat(highestDiv.getAttribute('data-max'))) {
+                highestDiv.classList.remove('d-none'); // Show the highest div if X is larger than all ranges
+            }
+        }
+
+        function showQualityOptions(select) {
+            const selectedPanelId = select.value;
+
+            document.querySelectorAll('.quality-group').forEach(group => {
+                group.classList.add('d-none'); // Hide all groups
+                group.querySelectorAll('input[type="radio"]').forEach(radio => {
+                    radio.checked = false; // Uncheck all radio buttons
                 });
             });
-        });
+
+            document.querySelectorAll('.quality-group').forEach(group => group.classList.add('d-none'));
+            if (selectedPanelId) {
+                const matchingGroup = document.querySelector(`.quality-group[data-panel-id="${selectedPanelId}"]`);
+                if (matchingGroup) {
+                    matchingGroup.classList.remove('d-none');
+                }
+            }
+        }
+
+
+
+
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     function updatePrice(quantityInput, priceDisplay, unitPrice) {
+        //         var quantity = parseInt(quantityInput.value);
+        //         var totalPrice = (quantity * unitPrice).toFixed(2);
+        //         priceDisplay.textContent = totalPrice;
+        //         updateTotalPrice();
+        //     }
+
+        //     function updateTotalPrice() {
+        //         var total = 0;
+        //         document.querySelectorAll('.product-price').forEach(function(priceElement) {
+        //             total += parseFloat(priceElement.textContent);
+        //         });
+        //         document.getElementById('total_price').textContent = total.toFixed(2);
+        //     }
+
+        //     document.querySelectorAll('.panel-checkbox').forEach(function(checkbox) {
+        //         checkbox.addEventListener('change', function() {
+        //             var panelId = this.getAttribute('data-panel-id');
+        //             var radioButtons = document.querySelectorAll('input[name="quality_preference[' +
+        //                 panelId + ']"]');
+        //             var quantityInput = document.querySelector(
+        //                 'input.product-quantity[data-panel-id="' + panelId + '"]');
+        //             var priceDisplay = document.querySelector('.product-price[data-panel-id="' +
+        //                 panelId + '"]');
+        //             var unitPrice = parseFloat(quantityInput.getAttribute('data-unit-price'));
+
+        //             radioButtons.forEach(function(radio) {
+        //                 radio.disabled = !checkbox.checked;
+        //             });
+
+        //             quantityInput.disabled = !checkbox.checked;
+
+        //             if (!checkbox.checked) {
+        //                 quantityInput.value = 1;
+        //                 priceDisplay.textContent = '0.00';
+        //             } else {
+        //                 updatePrice(quantityInput, priceDisplay, unitPrice);
+        //             }
+
+        //             updateTotalPrice();
+        //         });
+        //     });
+
+        //     document.querySelectorAll('.input-step').forEach(function(stepper) {
+        //         var input = stepper.querySelector('.product-quantity');
+        //         var panelId = input.getAttribute('data-panel-id');
+        //         var priceDisplay = document.querySelector('.product-price[data-panel-id="' + panelId +
+        //             '"]');
+        //         var unitPrice = parseFloat(input.getAttribute('data-unit-price'));
+
+        //         stepper.querySelector('.plus').addEventListener('click', function() {
+        //             if (!input.disabled && Number(input.value) < Number(input.max)) {
+        //                 input.value = parseInt(input.value) + 1;
+        //                 updatePrice(input, priceDisplay, unitPrice);
+        //             }
+        //         });
+
+        //         stepper.querySelector('.minus').addEventListener('click', function() {
+        //             if (!input.disabled && Number(input.value) > Number(input.min)) {
+        //                 input.value = parseInt(input.value) - 1;
+        //                 updatePrice(input, priceDisplay, unitPrice);
+        //             }
+        //         });
+
+        //         input.addEventListener('change', function() {
+        //             if (!input.disabled) {
+        //                 updatePrice(input, priceDisplay, unitPrice);
+        //             }
+        //         });
+        //     });
+        // });
     </script>
     <script src="{{ asset('assets/custom-js/custom/form.js') }}?v={{ time() }}"></script>
     <script>
